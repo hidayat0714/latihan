@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>warung enak enak</title>
+
+    </head>
+<body>
+    <h2>menu makan warung jablay</h2>
+    <table>
+        <tr>
+            <th>nama makanan</th> 
+            <th>harga</th>
+            <th>jumlah</th>
+        </tr>
+        <tr class="item">
+            <td>Nasi Goreng</td>
+            <td class="harga">Rp 50.000</td>
+            <td><input type= "number" class="jumlah" value="0"title="jumlah nasi goreng"></td>
+            </tr>
+        <tr class="item">
+            <td>Ayam goreng</td>
+            <td class="harga">Rp 75.000</td>
+            <td><input type= "number" class="jumlah" value="0"title="jumlah Ayam goreng"></td>
+            </tr>
+        <tr class="item">
+            <td>es teh</td>
+            <td class="harga">Rp 15.000</td>
+            <td><input type= "number" class="jumlah" value="0"title="jumlah es teh"></td>
+            </tr>
+        <tr class="item">
+            <td>kopi</td>
+            <td class="harga">Rp 20.000</td>
+            <td><input type= "number" class="jumlah" value="0"title="jumlah kopi"></td>
+            </tr>
+    </table>
+
+    <button id="hitungtotal">hitung total</button>
+    <div id="totalpesanan"></div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#hitungtotal").click(function(){
+                var total = 0;
+                $(".item").each(function(){
+                    var harga = parsenInt($(this).find('.harga').text().replace("Rp", "").replace(".",""));
+                    var jumlah = parsenInt($(this).find(".jumlah").val());
+                    total += harga * jumlah;
+                });
+                $("#totalpesanan").text("total pesanan: "+ total.toFixed(0));
+            });
+        });
+    </script>
+</body>
+</html>

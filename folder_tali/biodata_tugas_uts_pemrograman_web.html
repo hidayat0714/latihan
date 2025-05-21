@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Profil Saya</title>
+    <style>
+        #konten {
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #0fa6ec;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0044ff;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="background-color: #1a1ae6; color: white; padding: 10px;">Halo, Saya Muhamad Hidayat</h1>
+    <p style="text-align: center; color: gray;">- Foto Profil -</p>
+    <p><img src="ajim.JPEG" alt=" Foto Profil" width="200" style="border-radius: 50% ;"> </p>
+
+    <div id="konten">
+        <h2>Tentang Saya</h2>
+        <p>Saya adalah mahasiswa politeknik hasnur semester 2 yang sedang melakukan tugas uas</p>
+
+        <h2>Keahlian</h2>
+        <ul>
+            <li>HTML & CSS</li>
+            <li>JavaScript Dasar</li>
+            <li>PHP Dasar</li>
+        </ul>
+
+        <h2>Keahlian Luar kampus</h2>
+        <ul>
+            <li>Pandai Manjat Pohon kelapa</li>
+            <li>Memiliki Keahlian Dalam Bidang Pertanian</li>
+            <li>Kuliah Sambil Kerja</li>
+        </ul>
+
+        <h2>Kontak</h2>
+        <p>Email: garudalangit72@gmail.com</p>
+        <p>Instagram: @hidayat_0714</p>
+    </div>
+
+    <button onclick="toggleKonten()">Sembunyikan Biodata</button>
+
+    <script>
+        const konten = document.getElementById("konten");
+        const tombol = document.querySelector("button");
+
+        function toggleKonten() {
+            if (konten.style.display === "none") {
+                konten.style.display = "block";
+                tombol.textContent = "Sembunyikan Biodata";
+            } else {
+                konten.style.display = "none";
+                tombol.textContent = "Tampilkan Biodata";
+            }
+        }
+    </script>
+</body>
+</html>
