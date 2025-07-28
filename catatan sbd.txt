@@ -1,0 +1,56 @@
+SELECT nim_mahasiwa, nama_mahasiswa FROM mahasasiswa; ''mengambil data nama dan nim mahasioswa dari tabel mahasiswa''
+
+SELECT DISTINCT jenis kelamin FROM mahasiswa; "untuk memfilter agar yang keluar cuma laki lai dan perempuan"
+
+list dalam data ada 3 yaitu 
+-SORT urutkan
+-FILTER saring
+-SEARCH cari
+
+
+SELECT * FROM `mahasiswa` WHERE jenis_kelamin='laki-laki';  "memfilter agar cuma data laki laki dari table mahasiswa yang keluar"
+
+SELECT nama_mahasiswa FROM mahasiswa WHERE angkatan=2022; memfilter agar yang keluar nama mahasiawa dar angkatan 2022
+
+
+SELECT nama_mahasiswa FROM mahasiswa WHERE nilai>70; memfilter mahasiswa yang nilainya kurang dari 70
+
+
+SELECT * FROM mahasiswa WHERE jenis_kelamin='laki-laki' AND nilai>70; memfilter agar laki laki denbgan nilai kurang dari 70 yang keluar
+
+
+SELECT * FROM `mahasiswa` WHERE angkatan=2022 OR angkatan=2024; penggunaan OR agar data yang tampil dapat 2 angkatan sekaligus dari 2022 dan 2024
+
+
+SELECT * FROM `mahasiswa` WHERE NOT angkatan=2024; WHERE NOT agar data yang keluar selain angkatan 2024
+
+
+SELECT * FROM mahasiswa ORDER BY nilai; MENSORT atau mengurutkan dari nilai terkecil
+
+
+SELECT * FROM `mahasiswa` ORDER BY nama_mahasiswa DESC; DESC membalik urutan dari SORT agar dari huruf terakhir
+
+
+SELECT COUNT(*) FROM `mahasiswa` WHERE jenis_kelamin='Perempuan';   menghitung jumlah perempuan
+
+
+SELECT MAX(nilai) FROM `mahasiswa`; menampilkan nlai tertinggi
+
+
+SELECT MIN(nilai) FROM `mahasiswa`; menampilkan nilai terendah
+
+
+SELECT MIN(nilai) FROM `mahasiswa`WHERE jenis_kelamin= 'laki-laki';  dan laki laki
+
+
+SELECT AVG(nilai) FROM `mahasiswa` ;
+SELECT SUM(nilai) FROM mahasiswa ;   mengambil nilai rata rata yang di tambahkan dari seluruh nilai mahasiswa
+
+
+SELECT angkatan, COUNT(*) FROM mahasiswa GROUP BY angkatan;  menghitung jumlah anggota setiap angkatan
+
+
+SELECT * FROM  mahasiswa WHERE nama_mahasiswa LIKE '%an%'; mengambil data mahasiswa yang terdapat kata 'an'
+
+
+
