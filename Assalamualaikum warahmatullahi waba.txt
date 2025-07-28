@@ -1,0 +1,190 @@
+Assalamualaikum warahmatullahi wabarakatuh.
+Halo semuanya, perkenalkan nama saya [Ajim].
+Pada video ini, saya akan menjelaskan contoh penggunaan SQL DDL, DML, dan DQL untuk kasus sistem pencatatan sewa kost-kostan.
+
+ 1. DDL (Data Definition Language)
+DDL adalah perintah SQL yang digunakan untuk membuat struktur database, seperti tabel.
+
+Contoh pertama adalah membuat tabel penyewa, kamar, dan sewa.
+
+
+CREATE TABLE penyewa (
+    id_penyewa INT AUTO_INCREMENT PRIMARY KEY,
+    nama VARCHAR(100),
+    no_hp VARCHAR(15),
+    alamat TEXT
+);
+Tabel ini menyimpan data penyewa seperti nama, nomor HP, dan alamat.
+
+
+
+Kemudian, tabel kamar berisi data nomor kamar, tipe, dan harga.
+
+CREATE TABLE kamar (
+    id_kamar INT AUTO_INCREMENT PRIMARY KEY,
+    no_kamar VARCHAR(10),
+    tipe VARCHAR(50),
+    harga INT
+);
+
+
+
+Dan terakhir, tabel sewa digunakan untuk mencatat siapa menyewa kamar mana, dan dari tanggal berapa sampai kapan.
+
+CREATE TABLE sewa (
+    id_sewa INT AUTO_INCREMENT PRIMARY KEY,
+    id_penyewa INT,
+    id_kamar INT,
+    tanggal_mulai DATE,
+    tanggal_selesai DATE,
+    FOREIGN KEY (id_penyewa) REFERENCES penyewa(id_penyewa),
+    FOREIGN KEY (id_kamar) REFERENCES kamar(id_kamar)
+);
+🧾 Penjelasan DDL-nya:
+AUTO_INCREMENT → Biar ID naik otomatis.
+
+NOT NULL → Kolom wajib diisi.
+
+UNIQUE → Nomor kamar tidak boleh kembar.
+
+ENUM → Pilihan tipe kamar terbatas.
+
+CHECK → Validasi harga harus lebih dari 0, dan tanggal mulai harus sebelum tanggal selesai.
+
+FOREIGN KEY → Relasi antar tabel agar data nyambung antar penyewa & kamar.
+
+
+
+✍ 2. DML (Data Manipulation Language)
+DML digunakan untuk mengisi atau memodifikasi data. Misalnya, menambahkan data ke dalam tabel.
+
+
+
+DML (Data Manipulation Language) - LEBIH LENGKAP
+➕ 1. INSERT (Menambahkan Data)
+sql
+Copy
+Edit
+-- Tambah penyewa
+INSERT INTO penyewa (nama, no_hp, alamat)
+VALUES 
+('Andi Saputra', '08123456789', 'Jl. Kenangan No.12'),
+('Dina Lestari', '08567891234', 'Jl. Mawar Indah'),
+('Rudi Hartono', '082211445566', 'Jl. Pahlawan No.45');
+
+-- Tambah kamar
+INSERT INTO kamar (no_kamar, tipe, harga)
+VALUES 
+('A101', 'Single', 1000000),
+('A102', 'Single', 1000000),
+('B201', 'Double', 1500000),
+('C301', 'VIP', 2000000);
+
+-- Tambah sewa
+INSERT INTO sewa (id_penyewa, id_kamar, tanggal_mulai, tanggal_selesai)
+VALUES 
+(1, 1, '2025-07-01', '2025-07-31'),
+(2, 2, '2025-07-15', '2025-08-15'),
+(3, 3, '2025-07-10', '2025-08-10');
+
+
+ 2. UPDATE (Mengubah Data)
+
+-- Ubah nomor HP penyewa
+UPDATE penyewa
+SET no_hp = '089988776655'
+WHERE id_penyewa = 3;
+
+-- Ubah harga kamar
+UPDATE kamar
+SET harga = 1800000
+WHERE tipe = 'VIP';
+
+
+ 3. DELETE (Menghapus Data)
+
+-- Hapus penyewa yang sudah keluar
+DELETE FROM penyewa
+WHERE id_penyewa = 2;
+
+-- Hapus data sewa yang batal
+DELETE FROM sewa
+WHERE id_sewa = 2;
+
+
+
+🔍 3. DQL (Data Query Language)
+DQL digunakan untuk melihat atau mengambil data dari tabel.
+
+ DQL (Data Query Language) – LEBIH LENGKAP
+✅ 1. Menampilkan semua data dari satu tabel
+
+-- Lihat semua data penyewa
+SELECT * FROM penyewa;
+
+-- Lihat semua data kamar
+SELECT * FROM kamar;
+
+-- Lihat semua data sewa
+SELECT * FROM sewa;
+
+
+🔗 2. JOIN antar tabel untuk lihat data sewa lengkap
+
+-- Tampilkan nama penyewa, nomor kamar, tanggal sewa
+SELECT 
+    s.id_sewa,
+    p.nama AS penyewa,
+    k.no_kamar,
+    s.tanggal_mulai,
+    s.tanggal_selesai
+FROM sewa s
+JOIN penyewa p ON s.id_penyewa = p.id_penyewa
+JOIN kamar k ON s.id_kamar = k.id_kamar;
+
+
+📅 3. Cari penyewa yang sedang menyewa bulan ini
+
+-- Tampilkan penyewa aktif di bulan Juli 2025
+SELECT 
+    p.nama,
+    k.no_kamar,
+    s.tanggal_mulai,
+    s.tanggal_selesai
+FROM sewa s
+JOIN penyewa p ON s.id_penyewa = p.id_penyewa
+JOIN kamar k ON s.id_kamar = k.id_kamar
+WHERE '2025-07-26' BETWEEN s.tanggal_mulai AND s.tanggal_selesai;
+(Tanggal bisa diganti pakai CURRENT_DATE kalau real time)
+
+
+💸 4. Hitung total harga kamar yang disewa
+
+-- Hitung total harga dari semua kamar yang sedang disewa
+SELECT 
+    SUM(k.harga) AS total_pendapatan
+FROM sewa s
+JOIN kamar k ON s.id_kamar = k.id_kamar;
+
+
+🔢 5. Hitung jumlah penyewa dan kamar
+
+-- Total penyewa
+SELECT COUNT(*) AS jumlah_penyewa FROM penyewa;
+
+-- Total kamar
+SELECT COUNT(*) AS jumlah_kamar FROM kamar;
+
+
+🔍 6. Tampilkan semua kamar VIP yang belum disewa
+
+-- Tampilkan kamar VIP yang belum dipakai di tabel sewa
+SELECT * FROM kamar
+WHERE tipe = 'VIP' AND id_kamar NOT IN (
+    SELECT id_kamar FROM sewa
+);
+
+DQL digunakan untuk mengambil data dari database. Kita bisa menampilkan semua data, mencari data tertentu, atau menggabungkan data dari beberapa tabel. Bahkan, kita bisa menghitung total pendapatan dari kamar yang disewa.”
+
+Baik, sekian penjelasan dari saya mengenai SQL DDL, DML, dan DQL dalam sistem pencatatan sewa kost.
+Semoga bermanfaat dan terima kasih. Wassalamualaikum warahmatullahi wabarakatuh.
